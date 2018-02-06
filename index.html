@@ -1,15 +1,32 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 	<link rel="stylesheet" type="text/css" href="css/style.css">
-	<title>Javascript/Canvas Game</title>
+	<title>Javascript Blackjack Game</title>
 </head>
 <body>
-	<canvas id="canvas">
+	
+
+	<div id="container">
+		<div id="gameboard">
+			<div class="row">
+				<div id="buttoncontainer" class="col-2">
+				<div class="button" id="startbutton">Start</div>
+				<div class="button hide" id="shufflebutton">Shuffle</div>
+				<div class="button hide" id="resetbutton">Reset</div>
+				<div class="button hide" id="dealbutton">Deal</div>
+				</div>
+				<div class="col-4"></div>
+				<div id="dealercards" class="col-6"></div>
+			</div>
+
+
+		</div>
 		
-	</canvas>
-	<div class="hide">
-		<img id="characterimage" src="img/hero.png">
+
+
+
 	</div>
 
 

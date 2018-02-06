@@ -1,0 +1,49 @@
+body, html {
+	padding: 0;
+	margin: 0;
+	text-align: center;
+}
+
+.hide {
+	display: none;
+}
+
+#container {
+	margin: 100px auto;
+	position: relative;
+	background-color: black;
+	height: 500px;
+	width: 700px;
+}
+
+#buttoncontainer {
+	z-index: 2;
+	font-size: 1.5em;
+	transform: translateX(10px);
+}
+
+.button {
+	border: 1px solid black;
+	background-color: #E4E4E4;
+	border-radius: 5px;
+	margin: 3px 0;
+}
+
+#gameboard {
+	height: 500px;
+	width: 700px;
+	z-index: 1;
+	background-image: url("http://www.maikbentlage.nl/wp-content/uploads/2013/12/Blackjack-tafel.png");
+	background-size: cover;
+	background-attachment: fixed;
+	background-repeat: no-repeat;
+}
+
+.cards {
+	height: 100px;
+	margin: 0px 10px;
+}
+
+#dealercards {
+	border: solid black 3px;
+}
