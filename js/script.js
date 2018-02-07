@@ -1,5 +1,7 @@
 var deckCount = 1;
 var cardArray = [];
+var cardCount = 0;
+var moveCount = 0;
 var player = 0;
 var playerActiveCards = [];
 var dealerActiveCards = [];
@@ -55,19 +57,53 @@ var countTotal = function(arr) {
 var displayScore = function() {
 	playerTotal = countTotal(playerActiveCards);
 	dealerTotal = countTotal(dealerActiveCards);
+	$('#playerscorebox').text('Player: ' + playerTotal);
+	$('#dealerscorebox').text(' | Dealer: ' + dealerTotal);
 };
 //---------------------------------------------------
 
+var checkForBust = function () {
+	if (playerTotal > 21) {
+	alert('YOU BUSTED!');
+	}
+};
+
+var dealerPlays = function () {
+
+};
+
+
+var dealToPlayer = function () {
+  if (player === 0) {
+	if (moveCount === 0 || moveCount === 1) {
+		var playerCard = $("<img>");
+		playerCard.attr('src', cardArray[cardCount].images.svg).addClass("cards").appendTo('#playercards');
+		playerActiveCards.push(cardArray[cardCount].numericalValue);
+		moveCount++;
+		cardCount++;
+	} else {
+		var playerCard = $("<img>");
+		playerCard.attr('src', cardArray[cardCount].images.svg).addClass("cards").appendTo('#playercards');
+		playerActiveCards.push(cardArray[cardCount].numericalValue);
+		moveCount++;
+		cardCount++;
+		displayScore();
+		checkForBust();
+	}
+}
+}; 
 
 
 
 
 
-var dealCards = function () {
-	//if player 0, deal to dealer box
-	////add image to card box
-	//create array of values for each card box
-	///dealerTotalArray //playerTotalArray
+var dealInitialCards = function () {
+
+	dealToPlayer();
+	dealToPlayer();
+	//add event listeners for for hit/stand
+	//after stand dealerPlays();
+	
 
 };
 
@@ -85,22 +121,20 @@ var startGame = function () {
 	$('#standbutton').toggleClass('hide');
 	$('#hitbutton').toggleClass('hide');
 	$('#dealbutton').toggleClass('hide');
+	
 
 
-	$('#dealbutton').click(function () {
-		for (i = 0; i < 7; i++) {
-		var dealerCard = $("<img>");
-		dealerCard.attr('src', cardArray[i].images.svg).addClass("cards");
-		$('#dealercards').append(dealerCard)
-		}
-	});
+	// $('#dealbutton').click(function () {
+	// 	for (i = 0; i < 7; i++) {
+	// 	var dealerCard = $("<img>");
+	// 	dealerCard.attr('src', cardArray[i].images.svg).addClass("cards");
+	// 	$('#dealercards').append(dealerCard)
+	// 	}
+	// });
 
-	$('#dealbutton').click(function () {
-		for (i = 9; i < 16; i++) {
-		var playerCard = $("<img>");
-		playerCard.attr('src', cardArray[i].images.svg).addClass("cards").appendTo('#playercards');
-		// $('#playercards').append(playerCard)
-		}
+	$('#dealbutton').click( function () {
+			dealToPlayer();
+
 	});
 
 	// var dealerCard2 = $("<img>");
