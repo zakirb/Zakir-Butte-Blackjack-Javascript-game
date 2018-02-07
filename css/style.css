@@ -17,11 +17,11 @@ body, html {
 	width: 70%;
 	
 }
-
-/*div {
+/*
+div {
 	border: solid 1px black;
-}
-*/
+}*/
+
 #buttoncontainer {
 	z-index: 2;
 	font-size: 2vw;
@@ -53,6 +53,10 @@ body, html {
 #dealercards {
 	width: 250px;
 	height: 100px;
+}
+
+#spacer {
+	height: 110px;
 }
 
 @media (max-width: 715px) {

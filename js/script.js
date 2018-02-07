@@ -17,10 +17,18 @@ var startGame = function () {
 
 
 $('#dealbutton').click(function () {
-	for (i = 0; i < 9; i++) {
+	for (i = 0; i < 2; i++) {
 	var dealerCard = $("<img>");
 	dealerCard.attr('src', cardArray[i].images.svg).addClass("cards");
 	$('#dealercards').append(dealerCard)
+	}
+});
+
+$('#dealbutton').click(function () {
+	for (i = 9; i < 11; i++) {
+	var playerCard = $("<img>");
+	playerCard.attr('src', cardArray[i].images.svg).addClass("cards");
+	$('#playercards').append(playerCard)
 	}
 });
 
