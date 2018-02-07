@@ -17,10 +17,10 @@ body, html {
 	width: 70%;
 	
 }
-/*
+
 div {
 	border: solid 1px black;
-}*/
+}
 
 #buttoncontainer {
 	z-index: 2;
@@ -71,6 +71,6 @@ div {
 @media (min-width: 800px) {
 	
 	#buttoncontainer {
-		font-size: 3vh;
+		font-size: 2.5vh;
 	}
 }

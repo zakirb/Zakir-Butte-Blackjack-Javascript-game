@@ -1,6 +1,7 @@
 var deckCount = 1;
 var cardArray = [];
 var dealCount = 0;
+var player = 0
 
 var getCards = function () {$.get('https://deckofcardsapi.com/api/deck/new/draw/?count=' + (deckCount * 52).toString()).done(function(data) {
     cardArray = data.cards;
@@ -9,7 +10,7 @@ var getCards = function () {$.get('https://deckofcardsapi.com/api/deck/new/draw/
     	if (item.value === "JACK" || item.value === "QUEEN" || item.value === "KING") {
     		item.numericalValue = 10;
     	} else if (item.value === "ACE") {
-    		item.numericalValue = 11;
+    		item.numericalValue = [11, 1];
     	} else {
     		item.numericalValue = parseInt(item.value);
     	}
@@ -17,7 +18,20 @@ var getCards = function () {$.get('https://deckofcardsapi.com/api/deck/new/draw/
 })};
 
 
-var dealCards = function () {};
+var dealCards = function () {
+	//if player 0, deal to dealer box
+	////add image to card box
+	//create array of values for each card box
+	///dealerTotalArray //playerTotalArray
+
+};
+
+var totalCount = function () {
+	//playerActiveCardArray.reduce(total, curVal) for sum
+	//checkFor21
+};
+
+
 
 
 
