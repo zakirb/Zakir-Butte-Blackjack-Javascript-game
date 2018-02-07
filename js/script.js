@@ -40,7 +40,8 @@ var startGame = function () {
 
 	$('#startbutton').toggleClass('hide');
 	$('#resetbutton').toggleClass('hide');
-	$('#shufflebutton').toggleClass('hide');
+	$('#standbutton').toggleClass('hide');
+	$('#hitbutton').toggleClass('hide');
 	$('#dealbutton').toggleClass('hide');
 
 

@@ -4,9 +4,7 @@ body, html {
 	text-align: center;
 }
 
-.hide {
-	display: none;
-}
+
 
 .container {
 	display: block;
@@ -55,9 +53,16 @@ div {
 	height: 100px;
 }
 
-#spacer {
+.spacer {
 	height: 110px;
 }
+
+#lowerbuttoncontainer {
+	position: absolute;
+	margin: 0;
+	transform: translate(150%, -40px);
+}
+
 
 @media (max-width: 715px) {
 	#gameboard {
@@ -73,4 +78,8 @@ div {
 	#buttoncontainer {
 		font-size: 2.5vh;
 	}
+}
+
+.hide {
+	display: none;
 }
