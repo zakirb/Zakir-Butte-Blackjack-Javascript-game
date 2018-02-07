@@ -1,11 +1,14 @@
 var deckCount = 1;
 var cardArray = [];
-var dealCount = 0;
-var player = 0
+var player = 0;
+var playerActiveCards = [];
+var dealerActiveCards = [];
+var playerTotal = 0;
+var dealerTotal = 0;
 
 var getCards = function () {$.get('https://deckofcardsapi.com/api/deck/new/draw/?count=' + (deckCount * 52).toString()).done(function(data) {
     cardArray = data.cards;
-    //creates numerical value for each object in array
+    //assigns numerical value instead of a string for each card object in array
     cardArray.forEach(function (item) {
     	if (item.value === "JACK" || item.value === "QUEEN" || item.value === "KING") {
     		item.numericalValue = 10;
@@ -47,6 +50,16 @@ var countTotal = function(arr) {
 
 	return total;
 };
+///------------------------------------------------------------------------------------------------------
+
+var displayScore = function() {
+	playerTotal = countTotal(playerActiveCards);
+	dealerTotal = countTotal(dealerActiveCards);
+};
+//---------------------------------------------------
+
+
+
 
 
 
