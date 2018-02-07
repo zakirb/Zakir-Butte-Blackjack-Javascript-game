@@ -15,16 +15,20 @@ var startGame = function () {
 	$('#shufflebutton').toggleClass('hide');
 	$('#dealbutton').toggleClass('hide');
 
-	var dealerCard1 = $("<img>");
-	dealerCard1.attr('src', cardArray[0].images.png).addClass("cards");
 
-	var dealerCard2 = $("<img>");
-	dealerCard2.attr('src', cardArray[1].images.png).addClass("cards");
-	
-	$('#dealbutton').click(function () {
-	$('#dealercards').append(dealerCard1).append(dealerCard2);
-
+$('#dealbutton').click(function () {
+	for (i = 0; i < 9; i++) {
+	var dealerCard = $("<img>");
+	dealerCard.attr('src', cardArray[i].images.svg).addClass("cards");
+	$('#dealercards').append(dealerCard)
+	}
 });
+
+	// var dealerCard2 = $("<img>");
+	// dealerCard2.attr('src', cardArray[1].images.svg).addClass("cards");
+	
+	
+	
 	
 
 
@@ -42,5 +46,7 @@ $(document).ready(function () {
 
 	$('#startbutton').click(startGame);
 getCards();
-
+	$('#resetbutton').click(function() {
+		location.reload();
+	});
 });
