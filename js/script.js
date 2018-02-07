@@ -18,6 +18,38 @@ var getCards = function () {$.get('https://deckofcardsapi.com/api/deck/new/draw/
 })};
 
 
+////counts total of player or dealer's active/played card array depending on presence of an Ace card
+var countTotal = function(arr) {
+  	var total = 0;
+	var sum = arr.reduce(function(acc, curVal){
+	  	if (curVal[0]) {
+	    	curVal = curVal[0];
+	  		return acc + curVal;
+	  	} else {
+	    	return acc + curVal;
+	  	}
+	});
+	
+	total = sum;
+	
+	if (sum > 21) {
+	  	var secondSum = arr.reduce(function(acc, curVal) {
+	    	if (curVal[1]) {
+	      		curVal = curVal[1];
+	      		return acc+ curVal;
+	    	} else {
+	      		return acc + curVal;
+	    	}
+	  	});
+
+	  	total = secondSum;
+	}
+
+	return total;
+};
+
+
+
 var dealCards = function () {
 	//if player 0, deal to dealer box
 	////add image to card box
@@ -26,10 +58,7 @@ var dealCards = function () {
 
 };
 
-var totalCount = function () {
-	//playerActiveCardArray.reduce(total, curVal) for sum
-	//checkFor21
-};
+
 
 
 
@@ -64,8 +93,6 @@ var startGame = function () {
 	// var dealerCard2 = $("<img>");
 	// dealerCard2.attr('src', cardArray[1].images.svg).addClass("cards");
 };
-
-
 
 
 

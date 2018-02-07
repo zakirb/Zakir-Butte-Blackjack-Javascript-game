@@ -2,7 +2,9 @@ body, html {
 	padding: 0;
 	margin: 0;
 	text-align: center;
+	background-color: #E7E7E9;
 }
+
 
 
 
@@ -16,9 +18,9 @@ body, html {
 	
 }
 
-div {
+/*div {
 	border: solid 1px black;
-}
+}*/
 
 #buttoncontainer {
 	z-index: 2;
@@ -82,4 +84,8 @@ div {
 
 .hide {
 	display: none;
+}
+
+.btn:focus {
+  outline: none;
 }
