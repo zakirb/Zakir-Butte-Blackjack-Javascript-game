@@ -1,10 +1,24 @@
 var deckCount = 1;
 var cardArray = [];
+var dealCount = 0;
 
 var getCards = function () {$.get('https://deckofcardsapi.com/api/deck/new/draw/?count=' + (deckCount * 52).toString()).done(function(data) {
     cardArray = data.cards;
-    // console.log(cardArray);
+    //creates numerical value for each object in array
+    cardArray.forEach(function (item) {
+    	if (item.value === "JACK" || item.value === "QUEEN" || item.value === "KING") {
+    		item.numericalValue = 10;
+    	} else if (item.value === "ACE") {
+    		item.numericalValue = 11;
+    	} else {
+    		item.numericalValue = parseInt(item.value);
+    	}
+    });
 })};
+
+
+var dealCards = function () {};
+
 
 
 
@@ -16,31 +30,24 @@ var startGame = function () {
 	$('#dealbutton').toggleClass('hide');
 
 
-$('#dealbutton').click(function () {
-	for (i = 0; i < 2; i++) {
-	var dealerCard = $("<img>");
-	dealerCard.attr('src', cardArray[i].images.svg).addClass("cards");
-	$('#dealercards').append(dealerCard)
-	}
-});
+	$('#dealbutton').click(function () {
+		for (i = 0; i < 7; i++) {
+		var dealerCard = $("<img>");
+		dealerCard.attr('src', cardArray[i].images.svg).addClass("cards");
+		$('#dealercards').append(dealerCard)
+		}
+	});
 
-$('#dealbutton').click(function () {
-	for (i = 9; i < 11; i++) {
-	var playerCard = $("<img>");
-	playerCard.attr('src', cardArray[i].images.svg).addClass("cards");
-	$('#playercards').append(playerCard)
-	}
-});
+	$('#dealbutton').click(function () {
+		for (i = 9; i < 16; i++) {
+		var playerCard = $("<img>");
+		playerCard.attr('src', cardArray[i].images.svg).addClass("cards").appendTo('#playercards');
+		// $('#playercards').append(playerCard)
+		}
+	});
 
 	// var dealerCard2 = $("<img>");
 	// dealerCard2.attr('src', cardArray[1].images.svg).addClass("cards");
-	
-	
-	
-	
-
-
-
 };
 
 
@@ -52,8 +59,8 @@ $('#dealbutton').click(function () {
 
 $(document).ready(function () {
 
+	getCards();
 	$('#startbutton').click(startGame);
-getCards();
 	$('#resetbutton').click(function() {
 		location.reload();
 	});
