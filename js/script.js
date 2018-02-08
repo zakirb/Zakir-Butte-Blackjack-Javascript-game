@@ -55,10 +55,29 @@ var countTotal = function(arr) {
 ///------------------------------------------------------------------------------------------------------
 
 var displayScore = function() {
-	playerTotal = countTotal(playerActiveCards);
-	dealerTotal = countTotal(dealerActiveCards);
+
+	if (playerActiveCards[1]) {
+		playerTotal = countTotal(playerActiveCards);
+	} else if (playerActiveCards) {
+		playerTotal = cardArray[cardCount].numericalValue;
+	} else {
+		playerTotal = 0;
+	}
+
+	// if (player === 1) {
+	// 	if (dealerActiveCards[1]) {
+	// 		dealerTotal = countTotal(dealerActiveCards);
+	// 	} else if (dealerActiveCards) {
+	// 		dealerTotal = cardArray[cardCount].numericalValue;
+	// 	} else {
+	// 		dealerTotal = 0;
+	// 	}	
+	// }
+
+	// playerTotal = countTotal(playerActiveCards);
+	// dealerTotal = countTotal(dealerActiveCards);
 	$('#playerscorebox').text('Player: ' + playerTotal);
-	$('#dealerscorebox').text(' | Dealer: ' + dealerTotal);
+	// $('#dealerscorebox').text(' | Dealer: ' + dealerTotal);
 };
 //---------------------------------------------------
 
@@ -68,27 +87,53 @@ var checkForBust = function () {
 	}
 };
 
+var takeAStand = function () {
+
+};
+
 var dealerPlays = function () {
+	if (player === 1) {
+	if (moveCount === 1) {
+		var dealerCard = $("<img>");
+		dealerCard.attr('src', 'img/card_back.svg').addClass("cards").appendTo('#dealercards');
+		dealerActiveCards.push(cardArray[cardCount].numericalValue);
+		moveCount++;
+		cardCount++;
+		player = 0;
+	} 
+	if (moveCount === 3) {
+		var dealerCard = $("<img>");
+		dealerCard.attr('src', cardArray[cardCount].images.svg).addClass("cards").appendTo('#dealercards');
+		dealerActiveCards.push(cardArray[cardCount].numericalValue);
+		moveCount++;
+		cardCount++;
+		player = 0;
+	}
+	}
+
+	////finish dealer AI to automatically play out
 
 };
 
 
 var dealToPlayer = function () {
   if (player === 0) {
-	if (moveCount === 0 || moveCount === 1) {
+	if (moveCount === 0 || moveCount === 2) {
 		var playerCard = $("<img>");
 		playerCard.attr('src', cardArray[cardCount].images.svg).addClass("cards").appendTo('#playercards');
 		playerActiveCards.push(cardArray[cardCount].numericalValue);
+		displayScore();
 		moveCount++;
 		cardCount++;
+		player = 1;
 	} else {
 		var playerCard = $("<img>");
 		playerCard.attr('src', cardArray[cardCount].images.svg).addClass("cards").appendTo('#playercards');
 		playerActiveCards.push(cardArray[cardCount].numericalValue);
+		displayScore();
 		moveCount++;
 		cardCount++;
-		displayScore();
-		checkForBust();
+		checkForBust()
 	}
 }
 }; 
@@ -100,7 +145,15 @@ var dealToPlayer = function () {
 var dealInitialCards = function () {
 
 	dealToPlayer();
+	dealerPlays();
 	dealToPlayer();
+	dealerPlays();
+	$('#hitbutton').click(dealToPlayer);
+	$('#standbutton').click( function () {
+		player = 1;
+		dealerPlays();
+	});
+
 	//add event listeners for for hit/stand
 	//after stand dealerPlays();
 	
@@ -116,11 +169,11 @@ var dealInitialCards = function () {
 
 var startGame = function () {
 
-	$('#startbutton').toggleClass('hide');
-	$('#resetbutton').toggleClass('hide');
-	$('#standbutton').toggleClass('hide');
-	$('#hitbutton').toggleClass('hide');
-	$('#dealbutton').toggleClass('hide');
+	$('#startbutton').toggle();
+	$('#resetbutton').toggle();
+	$('#standbutton').toggle();
+	$('#hitbutton').toggle();
+	$('#dealbutton').toggle();
 	
 
 
@@ -133,7 +186,8 @@ var startGame = function () {
 	// });
 
 	$('#dealbutton').click( function () {
-			dealToPlayer();
+			dealInitialCards();
+			$('#dealbutton').toggle();
 
 	});
 
