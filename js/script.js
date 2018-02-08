@@ -104,6 +104,10 @@ var checkForBust = function () {
 	}
 };
 
+
+
+//------------------------------------------------------
+
 var stand = function () {
 	player = 2;
 	displayScore();
@@ -214,9 +218,9 @@ var nextHand = function () {
 	$('#playercards').empty();
 	displayScore();
 
-	$('#dealbutton').toggle().on('click', function () {
+	$('#dealbutton').toggleClass('hidden').on('click', function () {
 			dealInitialCards();
-			$('#dealbutton').toggle().off();
+			$('#dealbutton').toggleClass('hidden').off();
 	});
 };
 
@@ -225,6 +229,20 @@ var endHand = function() {
 	$('#hitbutton').off();
 	$('#standbutton').off();
 	$('#nexthandbutton').toggle().on('click', nextHand);
+
+	// if (playerWin) {
+	// 	console.log('you win');
+	// 	if (playerBlackjack) {
+	// 		console.log('BLACKJACK');
+	// 		chipTotal += (1.5 * bet);
+	// 	} else {
+	// 		chipTotal += bet;
+	// 	}
+	// }
+	// if (dealerWin) {
+	// 	bet = 0;
+	// 	console.log('you lose');
+	// }
 };
 
 
@@ -237,11 +255,11 @@ var startGame = function () {
 	$('#resetbutton').toggle();
 	$('#standbutton').toggle();
 	$('#hitbutton').toggle();
-	$('#dealbutton').toggle();
+	$('#dealbutton').toggleClass('hidden');
 
 	$('#dealbutton').on('click', function () {
 			dealInitialCards();
-			$('#dealbutton').toggle().off();
+			$('#dealbutton').toggleClass('hidden').off();
 	});
 };
 

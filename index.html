@@ -25,16 +25,26 @@
 			</div>
 			<div class="spacer"></div>
 			<div class="row">
-				<div class="col-4">CHIPS</div>
+				<div class="col-4">
+					<div class='spacer300'></div>
+				</div>
 				<div id="playercards" class="col-6 d-flex justify-content-center"></div>
 			</div>
+		<div class="col-4" id='#betbox'>
+			<div class='bets' id='currentbet'>Bet</div>
+			<div class='bets' id='chipTotal'>Chips</div>
+			<div>
+			<div class='betincrement' id='increasebet'>+</div>
+			<div class='betincrement' id='decreasebet'>-</div>
+			</div>
+		</div>
 		</div>
 		<div id="lowerbuttoncontainer">
 			<input type="button" name="hit" id='hitbutton' class="button hide" value='Hit'>
 			<input type="button" name="hit" id='standbutton' class="button hide" value='Stand'>
-			<input type="button" name="hit" id='dealbutton' class="button hide" value='Deal'>
+			<input type="button" name="hit" id='dealbutton' class="button hidden" value='Deal'>
 		</div>
-		<div class="scorebox"><span id="playerscorebox">Player: 0</span>
+		<div class="scorebox"><span id="playerscorebox"></span>
 			<span id="dealerscorebox"></span>
 		</div>
 	</div>
