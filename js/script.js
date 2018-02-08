@@ -100,7 +100,6 @@ var checkForBust = function () {
 	}
 	if (dealerTotal > 21) {
 	$('#dealerscorebox').text(' | Dealer: BUST!');
-	endHand();
 	}
 };
 
@@ -109,6 +108,10 @@ var checkForBust = function () {
 //------------------------------------------------------
 
 var stand = function () {
+	console.log('STAND');
+	$('#hitbutton').off();
+	$('#standbutton').off();
+	moveCount++;
 	player = 2;
 	displayScore();
 	dealerPlays();
@@ -116,6 +119,8 @@ var stand = function () {
 //--------------------------------------------------------
 
 var dealerPlays = function () {
+	console.log('Movecount equals: ' + moveCount);
+	console.log('DEALER PLAYS');
 	if (player === 1) {
 	if (moveCount === 1) {
 		var dealerCard = $("<img>");
@@ -136,7 +141,7 @@ var dealerPlays = function () {
 	}
 	}
 
-	if (player === 2) {
+	if (player === 2 && moveCount > 3) {
 		$('.upsidedowncard').attr('src', dealerCardImageUrl);
 		setTimeout( function () {
 			$('.upsidedowncard').toggleClass('cards').toggleClass('upsidedowncard');
@@ -144,8 +149,8 @@ var dealerPlays = function () {
 
 		var dealThrough = setInterval(function() {
 			if (dealerTotal >= 17) {
-				checkForBust();
 				endHand();
+				checkForBust();
 				clearInterval(dealThrough);
 			} else if (dealerTotal < 17) {
 				var dealerCard = $("<img>");
@@ -158,13 +163,14 @@ var dealerPlays = function () {
 			}
 		}, 500);
 		
-		////finish dealer AI to automatically play out
 	}
 };
 
 //----------------------------------------------------------------------------------------------------
 
 var dealToPlayer = function () {
+	console.log('Movecount equals: ' + moveCount);
+	console.log('DEAL TO PLAYER');
   if (player === 0) {
 	if (moveCount === 0 || moveCount === 2) {
 		var playerCard = $("<img>");
@@ -191,7 +197,11 @@ var dealToPlayer = function () {
 
 
 var dealInitialCards = function () {
-
+	console.log('DEAL INITIAL CARDS');
+	moveCount = 0;
+	player = 0;
+	playerActiveCards = [];
+	dealerActiveCards = [];
 	dealToPlayer();
 	dealerPlays();
 	dealToPlayer();
@@ -206,6 +216,7 @@ var dealInitialCards = function () {
 };
 
 var nextHand = function () {
+	console.log('NEXT HAND');
 	$('#nexthandbutton').toggle().off();
 	moveCount = 0;
 	player = 0;
@@ -226,6 +237,7 @@ var nextHand = function () {
 
 
 var endHand = function() {
+	console.log('END HAND');
 	$('#hitbutton').off();
 	$('#standbutton').off();
 	$('#nexthandbutton').toggle().on('click', nextHand);
