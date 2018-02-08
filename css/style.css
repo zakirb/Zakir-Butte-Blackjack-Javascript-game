@@ -45,14 +45,16 @@ body, html {
 	background-repeat: no-repeat;
 }
 
-.cards {
-	height: 300px;
-	margin: -60px -80px;
-}
+
 
 .upsidedowncard {
 	height: 90px;
 	margin: 45px -20px 0px;
+}
+
+.cards {
+	height: 300px;
+	margin: -60px -80px;
 }
 
 #dealercards {
