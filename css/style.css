@@ -50,6 +50,11 @@ body, html {
 	margin: -60px -80px;
 }
 
+.upsidedowncard {
+	height: 90px;
+	margin: 45px -20px 0px;
+}
+
 #dealercards {
 	width: 250px;
 	height: 100px;
