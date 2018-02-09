@@ -18,13 +18,13 @@ body, html {
 	
 }
 
-/*div {
+div {
 	border: solid 1px black;
-}*/
+}
 
 #buttoncontainer {
 	z-index: 2;
-	font-size: 2vw;
+	font-size: 1.5vw;
 	transform: translateX(10px);
 	/*border: solid 1px black;*/
 }
@@ -37,8 +37,8 @@ body, html {
 }
 
 #gameboard {
-	height: 500px;
-	width: 100%
+	height: 78vh;
+	width: 100%;
 	z-index: 1;
 	background-image: url("http://www.maikbentlage.nl/wp-content/uploads/2013/12/Blackjack-tafel.png");
 	background-size: cover;
@@ -47,40 +47,40 @@ body, html {
 
 
 .upsidedowncard {
-	height: 90px;
-	margin: 45px -20px 0px;
+	height: 13.5vh;
+	margin: 8vh -3vh 0vh;
 }
 
 .cards {
-	height: 300px;
-	margin: -60px -80px;
+	height: 45vh;
+	margin: -7.8vh -12vh;
 }
 
 #dealercards {
-	width: 250px;
-	height: 100px;
+	width: 37vh;
+	height: 15vh;
 }
 
 .spacer {
-	height: 110px;
+	height: 17vh;
 }
 .spacer300 {
-	height: 180px;
+	height: 29.4vh;
 }
 
 #lowerbuttoncontainer {
 	position: absolute;
 	margin: 0;
-	transform: translate(100%, -40px);
+	transform: translateY(-6vh);
 	display: inline-block;
 }
 
 
-@media (max-width: 715px) {
-	#gameboard {
-		width: 500px;
+@media (max-width: 800px) {
+	.cointainer {
+		width: 90vw;
 	}
-	#buttoncontainer {
+	#buttoncontainer, #lowerbuttoncontainer {
 		font-size: 10px;
 	}
 }
@@ -92,25 +92,34 @@ body, html {
 	}
 }
 
+@media (max-width: 580px) {
+	body {
+		display: none
+	}
+}
+
 .hide {
 	display: none;
 }
+
 
 .bets {
 	border: 0.5px solid #E7E7E9;
 	background-color: black;
 	font-weight: bold;
 	color: #E7E7E9;
-	width: 50px;
+	width: 7.5vh;
 	margin: 2px auto;
+	font-size: 2.5vh;
 }
 
 .betincrement {
 	display: inline-block;
-	width: 25px;
+	width: 3.75vh;
 	border: solid 1px black;
 	border-radius: 5px;
 	background-color: #CCC;
+	font-size: 2.5vh;
 
 }
 

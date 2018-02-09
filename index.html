@@ -6,8 +6,6 @@
 	<title>Javascript Blackjack Game</title>
 </head>
 <body>
-	
-
 	<div class="container">
 		<div id="gameboard">
 			<div class="row">
@@ -18,19 +16,19 @@
 					<div class="button hide" id="nexthandbutton">Next Hand</div>
 				</div>
 				<div class="col-10">
-					<div class='row'>
-						<div id="dealercards" class="col-12 d-flex justify-content-center"></div>
+					<div class='row'><div class="col-sm-2 col-md-1"></div>
+						<div id="dealercards" class="col-md-11 col-sm-10 col-lg-10 d-flex justify-content-center"></div><div class='col-lg-1'></div>
 					</div>
 				</div>
 			</div>
 			<div class="spacer"></div>
 			<div class="row">
-				<div class="col-4">
+				<div class="col-sm-4 col-md-5">
 					<div class='spacer300'></div>
 				</div>
-				<div id="playercards" class="col-6 d-flex justify-content-center"></div>
+				<div id="playercards" class="col-sm-4 col-md-4 d-flex justify-content-center"></div><div class="col-md-3 col-sm-4"></div>
 			</div>
-		<div class="col-4" id='#betbox'>
+		<div class="col-sm-4" id='#betbox'>
 			<div class='bets' id='currentbet'></div>
 			<div class='bets' id='chiptotal'>Chiptotal</div>
 			<div>
