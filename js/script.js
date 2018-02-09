@@ -27,6 +27,7 @@ var getCards = function () {$.get('https://deckofcardsapi.com/api/deck/new/shuff
 	$.get(apiSplice1 + deckId + apiSplice2).done(function(data) {
 
     cardArray = data.cards;
+    cardCount = 0;
     //assigns numerical value instead of a string for each card object in array
     cardArray.forEach(function (item) {
     	if (item.value === "JACK" || item.value === "QUEEN" || item.value === "KING") {
@@ -210,7 +211,7 @@ var dealerPlays = function () {
 //----------------------------------------------------------------------------------------------------
 
 var dealToPlayer = function () {
-	console.log('Movecount equals: ' + moveCount);
+	console.log('CARDCOUNT: ' + cardCount);
 	console.log('DEAL TO PLAYER');
   if (player === 0 && playerTotal != 21) {
 	if (moveCount === 0 || moveCount === 2) {
@@ -239,9 +240,7 @@ var dealToPlayer = function () {
 
 var dealInitialCards = function () {
 	disableBetting();
-if (cardCount > cardArray.length) {
-	console.log('out of cards');
-}
+
 
 	console.log('DEAL INITIAL CARDS');
 	dealToPlayer();
@@ -274,6 +273,10 @@ var nextHand = function () {
 	$('#dealercards').empty();
 	$('#playercards').empty();
 	displayScore();
+	if (cardCount > (cardArray.length-12)) {
+	console.log('SHUFFLING');
+	getCards();
+	}
 
 	$('#dealbutton').toggleClass('hidden').on('click', function () {
 			dealInitialCards();
