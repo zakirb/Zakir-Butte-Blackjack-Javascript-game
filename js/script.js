@@ -13,6 +13,8 @@ var dealerWin = false;
 var playerBlackjack = false;
 var dealerBlackjack = false;
 var tieOrPush = false;
+var chipTotal = 100;
+var currentBet = 0;
 
 
 var getCards = function () {$.get('https://deckofcardsapi.com/api/deck/new/draw/?count=' + (deckCount * 52).toString()).done(function(data) {
@@ -227,6 +229,7 @@ var dealToPlayer = function () {
 
 
 var dealInitialCards = function () {
+	disableBetting();
 if (cardCount > cardArray.length) {
 	console.log('out of cards');
 }
@@ -244,6 +247,8 @@ if (cardCount > cardArray.length) {
 
 var nextHand = function () {
 	console.log('NEXT HAND');
+	refreshBetTable();
+	allowBetting();
 	$('#nexthandbutton').toggle().off();
 	moveCount = 0;
 	player = 0;
@@ -290,20 +295,54 @@ var endHand = function() {
 		console.log('you win');
 		if (playerBlackjack) {
 			console.log('PLAYER BLACKJACK');
-			// chipTotal += (2.5 * bet);
+			chipTotal += (2.5 * currentBet);
+			currentBet = 0;
+		} else {
+			chipTotal += (2 * currentBet);
+			currentBet = 0;
 		}
-		 // else {
-		// 	// chipTotal += (2 * bet);
-		// }
 	} else if (tieOrPush) {
 		console.log('TIE');
+		chipTotal += currentBet;
+		currentBet = 0;
+
 	} else if (dealerWin) {
-		// bet = 0;
+		currentBet = 0
 		console.log('you lose');
 	}
 };
 
 
+var increaseBet = function() {
+	if (chipTotal > 0) {
+	currentBet += 10;
+	chipTotal -= 10;
+	refreshBetTable();
+	}
+};
+
+var decreaseBet = function() {
+	if (currentBet > 0) {
+	currentBet -= 10;
+	chipTotal += 10;
+	refreshBetTable();
+	}
+};
+
+var refreshBetTable = function () {
+	$('#currentbet').text(currentBet)
+	$('#chiptotal').text(chipTotal)
+};
+
+var allowBetting = function () {
+	$('#increasebet').on('click', increaseBet);
+	$('#decreasebet').on('click', decreaseBet);
+};
+
+var disableBetting = function () {
+	$('#increasebet').off();
+	$('#decreasebet').off();
+};
 
 
 
@@ -314,7 +353,7 @@ var startGame = function () {
 	$('#standbutton').toggle();
 	$('#hitbutton').toggle();
 	$('#dealbutton').toggleClass('hidden');
-
+	allowBetting();
 	$('#dealbutton').on('click', function () {
 			dealInitialCards();
 			$('#dealbutton').toggleClass('hidden').off();
@@ -326,9 +365,10 @@ var startGame = function () {
 
 
 
-$(document).ready(function () {
 
+$(document).ready(function () {
 	getCards();
+	refreshBetTable();
 	$('#startbutton').click(startGame);
 	$('#resetbutton').click(function() {
 		location.reload();
