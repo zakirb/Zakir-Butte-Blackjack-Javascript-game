@@ -8,6 +8,12 @@ var dealerActiveCards = [];
 var playerTotal = 0;
 var dealerTotal = 0;
 var dealerCardImageUrl = null;
+var playerWin = false;
+var dealerWin = false;
+var playerBlackjack = false;
+var dealerBlackjack = false;
+var tieOrPush = false;
+
 
 var getCards = function () {$.get('https://deckofcardsapi.com/api/deck/new/draw/?count=' + (deckCount * 52).toString()).done(function(data) {
     cardArray = data.cards;
@@ -91,6 +97,19 @@ var displayScore = function() {
 
 	$('#playerscorebox').text('Player: ' + playerTotal);
 };
+//-----------------------------------------------------
+
+var checkForBlackjack = function () {
+	if (playerTotal === 21) {
+		playerBlackjack = true;
+	}
+
+	if (dealerTotal === 21) {
+		dealerBlackjack = true;
+	}
+
+};
+
 //---------------------------------------------------
 
 var checkForBust = function () {
@@ -119,6 +138,14 @@ var stand = function () {
 //--------------------------------------------------------
 
 var dealerPlays = function () {
+
+	var flipDealerCard = function () {
+		$('.upsidedowncard').attr('src', dealerCardImageUrl);
+			setTimeout( function () {
+				$('.upsidedowncard').toggleClass('cards').toggleClass('upsidedowncard');
+			}, 5);
+	};
+
 	console.log('Movecount equals: ' + moveCount);
 	console.log('DEALER PLAYS');
 	if (player === 1) {
@@ -127,6 +154,7 @@ var dealerPlays = function () {
 		dealerCard.attr('src', 'img/card_back.svg').addClass("upsidedowncard").appendTo('#dealercards');
 		dealerCardImageUrl = cardArray[cardCount].images.svg
 		dealerActiveCards.push(cardArray[cardCount].numericalValue);
+		console.log(cardArray[cardCount].numericalValue);
 		moveCount++;
 		cardCount++;
 		player = 0;
@@ -137,16 +165,29 @@ var dealerPlays = function () {
 		dealerActiveCards.push(cardArray[cardCount].numericalValue);
 		moveCount++;
 		cardCount++;
-		player = 0;
+		checkForBlackjack();
+
+///check for immediate blackjack
+		if (playerBlackjack && dealerBlackjack) {
+			flipDealerCard();
+			tieOrPush = true;
+			endHand();
+		} else if (playerBlackjack) {
+			playerWin = true;
+			endHand();
+		} else if (dealerBlackjack) {
+			flipDealerCard();
+			dealerWin = true;
+			endHand();
+		} else {
+			player = 0;
+		}
+
 	}
 	}
 
 	if (player === 2 && moveCount > 3) {
-		$('.upsidedowncard').attr('src', dealerCardImageUrl);
-		setTimeout( function () {
-			$('.upsidedowncard').toggleClass('cards').toggleClass('upsidedowncard');
-		}, 5);
-
+		flipDealerCard();
 		var dealThrough = setInterval(function() {
 			if (dealerTotal >= 17) {
 				endHand();
@@ -171,7 +212,7 @@ var dealerPlays = function () {
 var dealToPlayer = function () {
 	console.log('Movecount equals: ' + moveCount);
 	console.log('DEAL TO PLAYER');
-  if (player === 0) {
+  if (player === 0 && playerTotal != 21) {
 	if (moveCount === 0 || moveCount === 2) {
 		var playerCard = $("<img>");
 		playerCard.attr('src', cardArray[cardCount].images.svg).addClass("cards").appendTo('#playercards');
@@ -197,11 +238,11 @@ var dealToPlayer = function () {
 
 
 var dealInitialCards = function () {
+if (cardCount > cardArray.length) {
+	console.log('out of cards');
+}
+
 	console.log('DEAL INITIAL CARDS');
-	moveCount = 0;
-	player = 0;
-	playerActiveCards = [];
-	dealerActiveCards = [];
 	dealToPlayer();
 	dealerPlays();
 	dealToPlayer();
@@ -225,6 +266,11 @@ var nextHand = function () {
 	playerTotal = 0;
 	dealerTotal = 0;
 	dealerCardImageUrl = null;
+	playerWin = false;
+	dealerWin = false;
+	playerBlack = false;
+	dealerBlackjack = false;
+	tieOrPush = false;
 	$('#dealercards').empty();
 	$('#playercards').empty();
 	displayScore();
@@ -242,19 +288,33 @@ var endHand = function() {
 	$('#standbutton').off();
 	$('#nexthandbutton').toggle().on('click', nextHand);
 
-	// if (playerWin) {
-	// 	console.log('you win');
-	// 	if (playerBlackjack) {
-	// 		console.log('BLACKJACK');
-	// 		chipTotal += (1.5 * bet);
-	// 	} else {
-	// 		chipTotal += bet;
-	// 	}
-	// }
-	// if (dealerWin) {
-	// 	bet = 0;
-	// 	console.log('you lose');
-	// }
+	if (playerTotal <= 21 &&  (playerTotal > dealerTotal || dealerTotal > 21)) {
+		playerWin = true;
+	}
+
+	if (dealerTotal <= 21 &&  (playerTotal < dealerTotal || playerTotal > 21)) {
+		dealerWin = true;
+	}
+
+	if (dealerTotal === playerTotal) {
+		tieOrPush = true;
+	}
+
+	if (playerWin) {
+		console.log('you win');
+		if (playerBlackjack) {
+			console.log('PLAYER BLACKJACK');
+			// chipTotal += (2.5 * bet);
+		}
+		 // else {
+		// 	// chipTotal += (2 * bet);
+		// }
+	} else if (tieOrPush) {
+		console.log('TIE');
+	} else if (dealerWin) {
+		// bet = 0;
+		console.log('you lose');
+	}
 };
 
 
