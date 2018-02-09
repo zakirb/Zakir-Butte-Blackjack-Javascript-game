@@ -67,9 +67,9 @@ var displayScore = function() {
 		playerTotal = 0;
 	};
 
+	dealerTotal = countTotal(dealerActiveCards);
 	if (player === 2) {
 		if (dealerActiveCards[1]) {
-			dealerTotal = countTotal(dealerActiveCards);
 			$('#dealerscorebox').text(' | Dealer: ' + dealerTotal);
 		}
 	} else {
@@ -97,7 +97,8 @@ var checkForBlackjack = function () {
 var checkForBust = function () {
 	if (playerTotal > 21) {
 	$('#playerscorebox').text('Player: BUST!');
-	endHand();
+	player = 2;
+	dealerPlays();
 	}
 	if (dealerTotal > 21) {
 	$('#dealerscorebox').text(' | Dealer: BUST!');
@@ -125,7 +126,7 @@ var dealerPlays = function () {
 		$('.upsidedowncard').attr('src', dealerCardImageUrl);
 			setTimeout( function () {
 				$('.upsidedowncard').toggleClass('cards').toggleClass('upsidedowncard');
-			}, 5);
+			}, 50);
 	};
 
 	console.log('Movecount equals: ' + moveCount);
@@ -155,6 +156,7 @@ var dealerPlays = function () {
 			tieOrPush = true;
 			endHand();
 		} else if (playerBlackjack) {
+			flipDealerCard();
 			playerWin = true;
 			endHand();
 		} else if (dealerBlackjack) {
@@ -170,22 +172,27 @@ var dealerPlays = function () {
 
 	if (player === 2 && moveCount > 3) {
 		flipDealerCard();
-		var dealThrough = setInterval(function() {
-			if (dealerTotal >= 17) {
-				endHand();
-				checkForBust();
-				clearInterval(dealThrough);
-			} else if (dealerTotal < 17) {
-				var dealerCard = $("<img>");
-				dealerCard.attr('src', cardArray[cardCount].images.svg).addClass("cards").appendTo('#dealercards');
-				dealerActiveCards.push(cardArray[cardCount].numericalValue);
-				displayScore();
-				checkForBust();
-				moveCount++;
-				cardCount++;	
-			}
-		}, 500);
-		
+		if (playerTotal>21) {
+			endHand();
+
+		}
+		if (playerTotal <= 21) {
+			var dealThrough = setInterval(function() {
+				if (dealerTotal >= 17) {
+					endHand();
+					checkForBust();
+					clearInterval(dealThrough);
+				} else if (dealerTotal < 17) {
+					var dealerCard = $("<img>");
+					dealerCard.attr('src', cardArray[cardCount].images.svg).addClass("cards").appendTo('#dealercards');
+					dealerActiveCards.push(cardArray[cardCount].numericalValue);
+					displayScore();
+					checkForBust();
+					moveCount++;
+					cardCount++;	
+				}
+			}, 500);
+		}
 	}
 };
 
@@ -229,13 +236,10 @@ if (cardCount > cardArray.length) {
 	dealerPlays();
 	dealToPlayer();
 	dealerPlays();
+	if (playerWin === false && dealerWin === false){
 	$('#hitbutton').on('click', dealToPlayer);
 	$('#standbutton').on('click', stand);
-
-	//add event listeners for for hit/stand
-	//after stand dealerPlays();
-	
-
+	};
 };
 
 var nextHand = function () {
@@ -250,7 +254,7 @@ var nextHand = function () {
 	dealerCardImageUrl = null;
 	playerWin = false;
 	dealerWin = false;
-	playerBlack = false;
+	playerBlackjack = false;
 	dealerBlackjack = false;
 	tieOrPush = false;
 	$('#dealercards').empty();
