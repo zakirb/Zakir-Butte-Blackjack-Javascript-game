@@ -108,7 +108,8 @@ div {
 	background-color: black;
 	font-weight: bold;
 	color: #E7E7E9;
-	width: 7.5vh;
+	height: 4.25vh;
+	width: 60%;
 	margin: 2px auto;
 	font-size: 2.5vh;
 }
@@ -116,10 +117,11 @@ div {
 .betincrement {
 	display: inline-block;
 	width: 3.75vh;
-	border: solid 1px black;
+	border: solid 1px #E7E7E9;
 	border-radius: 5px;
 	background-color: #CCC;
 	font-size: 2.5vh;
+	color:black;
 
 }
 
