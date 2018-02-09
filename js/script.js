@@ -229,24 +229,20 @@ var dealToPlayer = function () {
 
 
 var dealInitialCards = function () {
-	if (currentBet > 0) {
-			disableBetting();
-			$('#dealbutton').toggleClass('hidden').off();
-		
-		if (cardCount > cardArray.length) {
-			console.log('out of cards');
-		}
-		
-		console.log('DEAL INITIAL CARDS');
-		dealToPlayer();
-		dealerPlays();
-		dealToPlayer();
-		dealerPlays();
-		if (playerWin === false && dealerWin === false){
-		$('#hitbutton').on('click', dealToPlayer);
-		$('#standbutton').on('click', stand);
-		};
-	}
+	disableBetting();
+if (cardCount > cardArray.length) {
+	console.log('out of cards');
+}
+
+	console.log('DEAL INITIAL CARDS');
+	dealToPlayer();
+	dealerPlays();
+	dealToPlayer();
+	dealerPlays();
+	if (playerWin === false && dealerWin === false){
+	$('#hitbutton').on('click', dealToPlayer);
+	$('#standbutton').on('click', stand);
+	};
 };
 
 var nextHand = function () {
@@ -270,7 +266,10 @@ var nextHand = function () {
 	$('#playercards').empty();
 	displayScore();
 
-	$('#dealbutton').toggleClass('hidden').on('click', dealInitialCards);
+	$('#dealbutton').toggleClass('hidden').on('click', function () {
+			dealInitialCards();
+			$('#dealbutton').toggleClass('hidden').off();
+	});
 };
 
 
@@ -346,6 +345,7 @@ var disableBetting = function () {
 };
 
 
+
 var startGame = function () {
 
 	$('#startbutton').toggle();
@@ -354,8 +354,17 @@ var startGame = function () {
 	$('#hitbutton').toggle();
 	$('#dealbutton').toggleClass('hidden');
 	allowBetting();
-	$('#dealbutton').on('click', dealInitialCards);
+	$('#dealbutton').on('click', function () {
+			dealInitialCards();
+			$('#dealbutton').toggleClass('hidden').off();
+	});
 };
+
+
+
+
+
+
 
 $(document).ready(function () {
 	getCards();
