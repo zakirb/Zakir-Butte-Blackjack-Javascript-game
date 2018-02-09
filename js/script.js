@@ -17,7 +17,15 @@ var chipTotal = 100;
 var currentBet = 0;
 
 
-var getCards = function () {$.get('https://deckofcardsapi.com/api/deck/new/draw/?count=' + (deckCount * 52).toString()).done(function(data) {
+//requests new, shuffled 6-deck card object from API, then draws from the same deck and adds to cardArray
+var getCards = function () {$.get('https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=6').done(function(data) {
+
+	var deckId = data.deck_id;
+	var apiSplice1 = 'https://deckofcardsapi.com/api/deck/';
+	var apiSplice2 = '/draw/?count=312';
+
+	$.get(apiSplice1 + deckId + apiSplice2).done(function(data) {
+
     cardArray = data.cards;
     //assigns numerical value instead of a string for each card object in array
     cardArray.forEach(function (item) {
@@ -29,7 +37,8 @@ var getCards = function () {$.get('https://deckofcardsapi.com/api/deck/new/draw/
     		item.numericalValue = parseInt(item.value);
     	}
     });
-})};
+
+})})};
 
 
 ////counts total of player or dealer's active/played card array depending on presence of an Ace card
