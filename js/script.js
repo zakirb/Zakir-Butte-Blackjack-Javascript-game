@@ -330,8 +330,8 @@ var decreaseBet = function() {
 };
 
 var refreshBetTable = function () {
-	$('#currentbet').text(currentBet)
-	$('#chiptotal').text(chipTotal)
+	$('#currentbet').text('Bet: $' + currentBet)
+	$('#chiptotal').text('Chips: $' + chipTotal)
 };
 
 var allowBetting = function () {
