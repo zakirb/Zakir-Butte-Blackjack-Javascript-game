@@ -31,47 +31,29 @@ var getCards = function () {$.get('https://deckofcardsapi.com/api/deck/new/draw/
 
 
 ////counts total of player or dealer's active/played card array depending on presence of an Ace card
-var countTotal = function(arr) {
-  	var total = 0;
-	var sum = arr.reduce(function(acc, curVal){
-	  	if (acc[0] && curVal[0]) {
-	  		acc = acc[0];
-	  		curVal = curVal[0]
-	  		return acc + curVal;
-	  	} else if (curVal[0]) {
-	    	curVal = curVal[0];
-	  		return acc + curVal;
-	  	} else if (acc[0]) {
-	  		acc = acc[0];
-	    	return acc + curVal;
-	  	} else {
-	  		return acc + curVal;
-	  	}
-	});
-	
-	total = sum;
-	
-	if (sum > 21) {
-	  	var secondSum = arr.reduce(function(acc, curVal) {
-	    	if (acc[0] && curVal[0]) {
-	  			acc = acc[1];
-	  			curVal = curVal[1]
-	  			return acc + curVal;
-	  		} else if (curVal[0]) {
-	   	 		curVal = curVal[1];
-	  			return acc + curVal;
-	  		} else if (acc[0]) {
-	  			acc = acc[1];
-	   	 		return acc + curVal;
-	  		} else {
-	  			return acc + curVal;
-	  		}
-	  	});
-
-	  	total = secondSum;
-	}
-
-	return total;
+var countTotal = function (arr) {
+  var cum = 0;
+  arr.forEach(function(item) {
+    if (item[0]) {
+      if (cum + item[0] > 21) {
+        cum = cum + item[1];
+      } else {
+        cum = cum + item[0];
+      }
+    } else {
+      cum = cum + item
+    }
+  });
+  if (cum > 21) {
+    cum = 0;
+    arr.forEach(function(item) {
+      if (item[0]) {
+        cum = cum + item[1];
+      } else {
+        cum = cum + item;
+      }
+    });
+  } return cum;
 };
 ///------------------------------------------------------------------------------------------------------
 

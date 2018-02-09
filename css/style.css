@@ -18,9 +18,9 @@ body, html {
 	
 }
 
-/*div {
+div {
 	border: solid 1px black;
-}*/
+}
 
 #buttoncontainer {
 	z-index: 2;
