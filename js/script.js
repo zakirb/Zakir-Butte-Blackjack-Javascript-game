@@ -44,28 +44,28 @@ var getCards = function () {$.get('https://deckofcardsapi.com/api/deck/new/shuff
 
 ////counts total of player or dealer's active/played card array depending on presence of an Ace card
 var countTotal = function (arr) {
-  var cum = 0;
+  var acc = 0;
   arr.forEach(function(item) {
     if (item[0]) {
-      if (cum + item[0] > 21) {
-        cum = cum + item[1];
+      if (acc + item[0] > 21) {
+        acc = acc + item[1];
       } else {
-        cum = cum + item[0];
+        acc = acc + item[0];
       }
     } else {
-      cum = cum + item
+      acc = acc + item
     }
   });
-  if (cum > 21) {
-    cum = 0;
+  if (acc > 21) {
+    acc = 0;
     arr.forEach(function(item) {
       if (item[0]) {
-        cum = cum + item[1];
+        acc = acc + item[1];
       } else {
-        cum = cum + item;
+        acc = acc + item;
       }
     });
-  } return cum;
+  } return acc;
 };
 ///------------------------------------------------------------------------------------------------------
 
@@ -122,7 +122,6 @@ var checkForBust = function () {
 //------------------------------------------------------
 
 var stand = function () {
-	console.log('STAND');
 	$('#hitbutton').off();
 	$('#standbutton').off();
 	moveCount++;
@@ -141,15 +140,12 @@ var dealerPlays = function () {
 			}, 50);
 	};
 
-	console.log('Movecount equals: ' + moveCount);
-	console.log('DEALER PLAYS');
 	if (player === 1) {
 	if (moveCount === 1) {
 		var dealerCard = $("<img>");
 		dealerCard.attr('src', 'img/card_back.svg').addClass("upsidedowncard").appendTo('#dealercards');
 		dealerCardImageUrl = cardArray[cardCount].images.svg
 		dealerActiveCards.push(cardArray[cardCount].numericalValue);
-		console.log(cardArray[cardCount].numericalValue);
 		moveCount++;
 		cardCount++;
 		player = 0;
@@ -186,9 +182,7 @@ var dealerPlays = function () {
 		flipDealerCard();
 		if (playerTotal>21) {
 			endHand();
-
-		}
-		if (playerTotal <= 21) {
+		} else if (playerTotal <= 21) {
 			var dealThrough = setInterval(function() {
 				if (dealerTotal >= 17) {
 					endHand();
@@ -211,8 +205,6 @@ var dealerPlays = function () {
 //----------------------------------------------------------------------------------------------------
 
 var dealToPlayer = function () {
-	console.log('CARDCOUNT: ' + cardCount);
-	console.log('DEAL TO PLAYER');
   if (player === 0 && playerTotal != 21) {
 	if (moveCount === 0 || moveCount === 2) {
 		var playerCard = $("<img>");
@@ -240,21 +232,17 @@ var dealToPlayer = function () {
 
 var dealInitialCards = function () {
 	disableBetting();
-
-
-	console.log('DEAL INITIAL CARDS');
 	dealToPlayer();
 	dealerPlays();
 	dealToPlayer();
 	dealerPlays();
 	if (playerWin === false && dealerWin === false){
-	$('#hitbutton').on('click', dealToPlayer);
-	$('#standbutton').on('click', stand);
+		$('#hitbutton').on('click', dealToPlayer);
+		$('#standbutton').on('click', stand);
 	};
 };
 
 var nextHand = function () {
-	console.log('NEXT HAND');
 	refreshBetTable();
 	allowBetting();
 	$('#nexthandbutton').toggle().off();
@@ -273,9 +261,9 @@ var nextHand = function () {
 	$('#dealercards').empty();
 	$('#playercards').empty();
 	displayScore();
+
 	if (cardCount > (cardArray.length-12)) {
-	console.log('SHUFFLING');
-	getCards();
+		getCards();
 	}
 
 	$('#dealbutton').toggleClass('hidden').on('click', function () {
@@ -286,7 +274,6 @@ var nextHand = function () {
 
 
 var endHand = function() {
-	console.log('END HAND');
 	$('#hitbutton').off();
 	$('#standbutton').off();
 	$('#nexthandbutton').toggle().on('click', nextHand);
@@ -304,9 +291,7 @@ var endHand = function() {
 	}
 
 	if (playerWin) {
-		console.log('you win');
 		if (playerBlackjack) {
-			console.log('PLAYER BLACKJACK');
 			chipTotal += (2.5 * currentBet);
 			currentBet = 0;
 		} else {
@@ -314,13 +299,11 @@ var endHand = function() {
 			currentBet = 0;
 		}
 	} else if (tieOrPush) {
-		console.log('TIE');
 		chipTotal += currentBet;
 		currentBet = 0;
 
 	} else if (dealerWin) {
-		currentBet = 0
-		console.log('you lose');
+		currentBet = 0;
 	}
 };
 
@@ -356,10 +339,7 @@ var disableBetting = function () {
 	$('#decreasebet').off();
 };
 
-
-
 var startGame = function () {
-
 	$('#startbutton').toggle();
 	$('#resetbutton').toggle();
 	$('#standbutton').toggle();
@@ -371,12 +351,6 @@ var startGame = function () {
 			$('#dealbutton').toggleClass('hidden').off();
 	});
 };
-
-
-
-
-
-
 
 $(document).ready(function () {
 	getCards();
